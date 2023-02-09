@@ -8,16 +8,18 @@ static std::vector<char> alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i
 //function definitions
 std::string WordGenerator();
 
+void GameLoop();
+void PlayerTurn();
 void DrawBoard();
 void CreateStar();
 void TakeStar(std::string starSelection);
-void DeclareStarCapitols();
+void DeclareFactionCapitols();
+void GetStarInfo(int starSel);
 
 //classes
-class Galaxy;
 class Star {
 private:
-	std::vector<std::string> starTypes = {"Red", "Blue", "Yellow", "Green"};
+	std::vector<std::string> starTypes = { "Red", "Blue", "Yellow", "Green" };
 public:
 	std::string starName = WordGenerator();
 	int numOfPlanets = std::rand() % 6;
@@ -32,11 +34,13 @@ public:
 			hasStarbase = true;
 		}
 	}
-
+	void GetStarInfo() {
+		std::cout << starName << " " << numOfPlanets << " " << starType << " " << hasStarbase << "\n";
+	}
 
 };
 class Galaxy {
-	
+
 public:
 
 	Galaxy() {
@@ -48,7 +52,7 @@ public:
 	}
 };
 class Faction {
-	
+
 public:
 	std::string factionCapitol;
 	std::string factionName;
