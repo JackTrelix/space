@@ -2,12 +2,12 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
+
 //horrible coding practices and cutting corners
 static std::vector<char> alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-//function definitions
+//function declarations
 std::string WordGenerator();
-
 void GameLoop();
 void PlayerTurn(int playerSel);
 void DrawBoard();
@@ -16,6 +16,19 @@ void TakeStar(std::string starSelection);
 void DeclareFactionCapitols();
 void GetStarInfo(int starSel);
 void DrawStarSystem(std::string enterStarSel);
+void CreateExplorer(int playerTurn);
+void CreateDestroyer(int playerTurn);
+void CreateMiner(int playerTurn);
+
+//class declarations
+class Star;
+class Planet;
+class Galaxy;
+class Ship;
+class Explorer;
+class Destroyer;
+class Miner;
+class Player;
 
 //classes
 class Star {
@@ -41,6 +54,10 @@ public:
 	}
 
 };
+class Planet {
+	int planetSize = 2 + std::rand() % 6;
+	float planetTemp;
+};
 class Galaxy {
 
 public:
@@ -55,7 +72,7 @@ public:
 };
 class Ship {
 public:
-	
+
 	int shipSpeed;
 	int shipDamage;
 
@@ -66,10 +83,9 @@ public:
 class Explorer : Ship {
 public:
 	std::string shipName;
-	Explorer() {
+	Explorer(std::string newExplorerName) {
+		shipName = newExplorerName;
 		
-		std::cout << "Please name the explorer";
-		std::cin >> shipName;
 
 		shipSpeed = 6;
 	}
@@ -82,13 +98,19 @@ public:
 };
 class Destroyer : Ship {
 public:
-
+	std::string shipName;
+	Destroyer(std::string newDestroyerName = WordGenerator()) {
+		shipName = newDestroyerName;
+	}
 };
 class Miner : Ship {
 public:
-
+	std::string shipName;
+	Miner(std::string newMinerName = WordGenerator()) {
+		shipName = newMinerName;
+	}
 };
-class Player{
+class Player {
 public:
 	std::vector<Explorer> playerExplorers = {};
 	std::vector<Destroyer> playerDestroyers = {};
@@ -99,6 +121,12 @@ public:
 	Player(std::string newFactionName = WordGenerator(), char newFactionLabel = alphabet[std::rand() % alphabet.size()]) {
 		factionName = newFactionName;
 		factionLabel = toupper(newFactionLabel);
-
+/*
+		Explorer newExplorer1();
+		playerExplorers.push_back(newExplorer1);
+		Destroyer newDestroyer1();
+		playerDestroyers.push_back(newDestroyer1);
+		*/
+		
 	}
 };
