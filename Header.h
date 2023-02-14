@@ -9,12 +9,13 @@ static std::vector<char> alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i
 std::string WordGenerator();
 
 void GameLoop();
-void PlayerTurn();
+void PlayerTurn(int playerSel);
 void DrawBoard();
 void CreateStar();
 void TakeStar(std::string starSelection);
 void DeclareFactionCapitols();
 void GetStarInfo(int starSel);
+void DrawStarSystem(std::string enterStarSel);
 
 //classes
 class Star {
@@ -27,6 +28,7 @@ public:
 	int controllingFaction = 0;
 	int iHasStarbase = std::rand() % 2;
 	bool hasStarbase;
+	int numOfDestroyersAtStar = 0;
 
 
 	Star() {
@@ -35,7 +37,7 @@ public:
 		}
 	}
 	void GetStarInfo() {
-		std::cout << starName << " " << numOfPlanets << " " << starType << " " << hasStarbase << "\n";
+		std::cout << "Name:" << starName << "\nNumber of Planets:" << numOfPlanets << "\nType:" << starType << "\nStarbase:" << hasStarbase << "\n";
 	}
 
 };
@@ -51,18 +53,52 @@ public:
 		}
 	}
 };
-class Faction {
-
+class Ship {
 public:
+	
+	int shipSpeed;
+	int shipDamage;
+
+	void UpgradeShipSpeed() {
+		shipSpeed++;
+	}
+};
+class Explorer : Ship {
+public:
+	std::string shipName;
+	Explorer() {
+		
+		std::cout << "Please name the explorer";
+		std::cin >> shipName;
+
+		shipSpeed = 6;
+	}
+	void SurveyStar() {
+		std::string starSel;
+		std::cout << "Please select a star to travel to: ";
+		std::cin >> starSel;
+		DrawStarSystem(starSel);
+	}
+};
+class Destroyer : Ship {
+public:
+
+};
+class Miner : Ship {
+public:
+
+};
+class Player{
+public:
+	std::vector<Explorer> playerExplorers = {};
+	std::vector<Destroyer> playerDestroyers = {};
+	std::vector<Miner> playerMiners = {};
 	std::string factionCapitol;
 	std::string factionName;
 	char factionLabel;
-	Faction(std::string newFactionName = WordGenerator(), char newFactionLabel = alphabet[std::rand() % alphabet.size()]) {
+	Player(std::string newFactionName = WordGenerator(), char newFactionLabel = alphabet[std::rand() % alphabet.size()]) {
 		factionName = newFactionName;
 		factionLabel = toupper(newFactionLabel);
+
 	}
-
-
-
-
 };
