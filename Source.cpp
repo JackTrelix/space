@@ -15,11 +15,11 @@ int main() {
 	std::cout << "Please label your empire with a single character: ";
 	std::cin >> playerFactionLabel;
 
-	Faction playerFaction(playerFactionName, playerFactionLabel);
-	Faction enemyFaction;
+	Player playerFaction1(playerFactionName, playerFactionLabel);
+	Player playerFaction2;
 	DeclareFactionCapitols();
 	DrawBoard();
-	GetStarInfo(5);
+	GameLoop();
 
 	return 0;
 }
