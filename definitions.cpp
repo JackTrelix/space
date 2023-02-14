@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstdlib>
 #include "Header.h"
+
 //major lists
 std::vector<Star> allStars = {};
 std::vector<std::string> allStarsNames = {};
@@ -43,49 +45,54 @@ void GameLoop() {
 	}
 }
 void PlayerTurn(int playerSel) {
-		bool optionSel = false;
-		int playerOptionSel;
-		std::cout << "Player " << playerSel << ", please select an option:\n";
-		std::cout << "1. View your star system\n";
-		std::cout << "2. Travel to star system\n";
-		std::cout << "3... \n";
-		std::cout << "4... \n";
-		std::cin >> playerOptionSel;
-		std::string viewStarSel;
-		bool playerControlStar = false;
-		bool playerNotControlStar = false;
-		while (optionSel == false) {
-			switch (playerOptionSel) {
-			case 1:		
-				while (playerControlStar == false) {
-					std::cout << "Please enter a star system under your control:";
-					std::cin >> viewStarSel;
-					for (int i = 0; i < allStarsNames.size(); i++) {
-						if (viewStarSel == allStarsNames[i]) {
-							if (allStars[i].controllingFaction == playerSel) {
-								DrawStarSystem(viewStarSel);
-								playerControlStar = true;
-							}
+	bool optionSel = false;
+	int playerOptionSel;
+	std::cout << "Player " << playerSel << ", please select an option:\n";
+	std::cout << "1. View your star system\n";
+	std::cout << "2. Travel to star system\n";
+	std::cout << "3. Build Explorer\n";
+	std::cout << "4... \n";
+	std::cin >> playerOptionSel;
+	std::string viewStarSel;
+	bool playerControlStar = false;
+	bool playerNotControlStar = false;
+	bool playerNotCreateExplorer = false;
+	while (optionSel == false) {
+		switch (playerOptionSel) {
+		case 1:
+			while (playerControlStar == false) {
+				std::cout << "Please enter a star system under your control:";
+				std::cin >> viewStarSel;
+				for (int i = 0; i < allStarsNames.size(); i++) {
+					if (viewStarSel == allStarsNames[i]) {
+						if (allStars[i].controllingFaction == playerSel) {
+							DrawStarSystem(viewStarSel);
+							playerControlStar = true;
 						}
 					}
 				}
-			case 2: 
-				while (playerNotControlStar == false) {
-					std::cout << "Please enter a star system not under your control:";
-					std::cin >> viewStarSel;
-					for (int i = 0; i < allStarsNames.size(); i++) {
-						if (viewStarSel == allStarsNames[i]) {
-							if (allStars[i].controllingFaction != playerSel) {
-								std::cout << "Please select an explorer ship under your control:";
-								for (int h = 1; h < players[playerSel].playerExplorers.size(); h++) {
-									std::cout << players[playerSel].playerExplorers[h].shipName << "\n";
-								}
+			}
+		case 2:
+			while (playerNotControlStar == false) {
+				std::cout << "Please enter a star system not under your control:";
+				std::cin >> viewStarSel;
+				for (int i = 0; i < allStarsNames.size(); i++) {
+					if (viewStarSel == allStarsNames[i]) {
+						if (allStars[i].controllingFaction != playerSel) {
+							std::cout << "Please select an explorer ship under your control:";
+							for (int h = 1; h < players[playerSel].playerExplorers.size(); h++) {
+								std::cout << players[playerSel].playerExplorers[h].shipName << "\n";
 							}
 						}
 					}
 				}
 			}
+		case 3:
+			while (playerNotCreateExplorer == false) {
+				CreateExplorer(playerSel);
+			}
 		}
+	}
 }
 std::string WordGenerator() {
 	std::string word;
@@ -171,11 +178,9 @@ void TakeStar(int selectingFaction, std::string starSelection) {
 			allStars[i].controllingFaction = selectingFaction;
 		}
 	}
-
-
 }
 void DeclareFactionCapitols() {
-	
+
 	factionCapitols.push_back(allStarsNames[std::rand() % allStarsNames.size()]);
 	factionCapitols.push_back(allStarsNames[std::rand() % allStarsNames.size()]);
 
@@ -197,4 +202,25 @@ void DrawStarSystem(std::string enterStarSel) {
 			GetStarInfo(i);
 		}
 	}
+}
+void CreateExplorer(int playerTurn) {
+	std::string explorerName;
+	std::cout << "Please name the explorer:";
+	std::cin >> explorerName;
+	Explorer newExplorer(explorerName);
+	players[playerTurn - 1].playerExplorers.push_back(newExplorer);
+}
+void CreateDestroyer(int playerTurn) {
+	std::string destroyerName;
+	std::cout << "Please name the destroyer:";
+	std::cin >> destroyerName;
+	Destroyer newDestroyer(destroyerName);
+	players[playerTurn - 1].playerDestroyers.push_back(newDestroyer);
+}
+void CreateMiner(int playerTurn) {
+	std::string minerName;
+	std::cout << "Please name the miner:";
+	std::cin >> minerName;
+	Miner newMiner(minerName);
+	players[playerTurn - 1].playerMiners.push_back(newMiner);
 }
