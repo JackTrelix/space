@@ -5,6 +5,7 @@
 //major lists
 std::vector<Star> allStars = {};
 std::vector<std::string> allStarsNames = {};
+std::vector<Player> players = {};
 std::vector <std::string> factionCapitols = {};
 
 //dunno what to call this but its basically the variables that determine the locations for the stars and record them so they don't change
@@ -35,25 +36,56 @@ std::vector<std::string> rowTen = { "\t", "\t", "\t", "\t", "\t", "\t", "\t", "\
 void GameLoop() {
 	bool isRunning = true;
 	while (isRunning) {
-		
+		PlayerTurn(1);
+		DrawBoard();
+		PlayerTurn(2);
+		DrawBoard();
 	}
 }
 void PlayerTurn(int playerSel) {
-	if (playerSel == 1) {
 		bool optionSel = false;
-		std::string playerOptionSel;
-		std::cout << "Player" << playerSel << "(enter \"help\" for more options: ";
+		int playerOptionSel;
+		std::cout << "Player " << playerSel << ", please select an option:\n";
+		std::cout << "1. View your star system\n";
+		std::cout << "2. Travel to star system\n";
+		std::cout << "3... \n";
+		std::cout << "4... \n";
 		std::cin >> playerOptionSel;
+		std::string viewStarSel;
+		bool playerControlStar = false;
+		bool playerNotControlStar = false;
 		while (optionSel == false) {
-			if (playerOptionSel == "help") {
-				std::cout << "The following options are:\n";
-				std::cout << "Type the name of a star to view the star system\n";
-				std::cout << "Type \"map\" to return to galaxy view\n";
-
+			switch (playerOptionSel) {
+			case 1:		
+				while (playerControlStar == false) {
+					std::cout << "Please enter a star system under your control:";
+					std::cin >> viewStarSel;
+					for (int i = 0; i < allStarsNames.size(); i++) {
+						if (viewStarSel == allStarsNames[i]) {
+							if (allStars[i].controllingFaction == playerSel) {
+								DrawStarSystem(viewStarSel);
+								playerControlStar = true;
+							}
+						}
+					}
+				}
+			case 2: 
+				while (playerNotControlStar == false) {
+					std::cout << "Please enter a star system not under your control:";
+					std::cin >> viewStarSel;
+					for (int i = 0; i < allStarsNames.size(); i++) {
+						if (viewStarSel == allStarsNames[i]) {
+							if (allStars[i].controllingFaction != playerSel) {
+								std::cout << "Please select an explorer ship under your control:";
+								for (int h = 1; h < players[playerSel].playerExplorers.size(); h++) {
+									std::cout << players[playerSel].playerExplorers[h].shipName << "\n";
+								}
+							}
+						}
+					}
+				}
 			}
 		}
-		
-	}
 }
 std::string WordGenerator() {
 	std::string word;
@@ -158,4 +190,11 @@ void DeclareFactionCapitols() {
 }
 void GetStarInfo(int starSel) {
 	allStars[starSel].GetStarInfo();
+}
+void DrawStarSystem(std::string enterStarSel) {
+	for (int i = 0; i < allStarsNames.size(); i++) {
+		if (allStarsNames[i] == enterStarSel) {
+			GetStarInfo(i);
+		}
+	}
 }
