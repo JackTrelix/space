@@ -56,7 +56,6 @@ void PlayerTurn(int playerSel) {
 	std::string viewStarSel;
 	bool playerControlStar = false;
 	bool playerNotControlStar = false;
-	bool playerNotCreateExplorer = false;
 	while (optionSel == false) {
 		switch (playerOptionSel) {
 		case 1:
@@ -72,6 +71,7 @@ void PlayerTurn(int playerSel) {
 					}
 				}
 			}
+			break;
 		case 2:
 			while (playerNotControlStar == false) {
 				std::cout << "Please enter a star system not under your control:";
@@ -87,10 +87,11 @@ void PlayerTurn(int playerSel) {
 					}
 				}
 			}
+			break;
 		case 3:
-			while (playerNotCreateExplorer == false) {
-				CreateExplorer(playerSel);
-			}
+			CreateExplorer(playerSel);
+			optionSel = true;
+			break;
 		}
 	}
 }
@@ -112,7 +113,6 @@ std::string WordGenerator() {
 }
 
 void DrawBoard() {
-
 	rowOne[rowOneSel] = "*" + allStarsNames[0] + "(" + std::to_string(allStars[0].controllingFaction) + ")";
 	rowTwo[rowTwoSel] = "*" + allStarsNames[1] + "(" + std::to_string(allStars[1].controllingFaction) + ")";
 	rowThree[rowThreeSel] = "*" + allStarsNames[2] + "(" + std::to_string(allStars[2].controllingFaction) + ")";
@@ -124,6 +124,7 @@ void DrawBoard() {
 	rowNine[rowNineSel] = "*" + allStarsNames[8] + "(" + std::to_string(allStars[8].controllingFaction) + ")";
 	rowTen[rowTenSel] = "*" + allStarsNames[9] + "(" + std::to_string(allStars[9].controllingFaction) + ")";
 
+	std::cout << "**********************************\n";
 	for (int i = 0; i < rowOne.size(); i++) {
 		std::cout << rowOne[i];
 	}
@@ -163,7 +164,7 @@ void DrawBoard() {
 	for (int i = 0; i < rowTen.size(); i++) {
 		std::cout << rowTen[i];
 	}
-	std::cout << "\n";
+	std::cout << "**********************************\n";
 
 }
 void CreateStar() {
@@ -208,19 +209,40 @@ void CreateExplorer(int playerTurn) {
 	std::cout << "Please name the explorer:";
 	std::cin >> explorerName;
 	Explorer newExplorer(explorerName);
-	players[playerTurn - 1].playerExplorers.push_back(newExplorer);
+	int playerCounter = 0;
+	for (int i = 0; i < players.size(); i++) {
+		playerCounter++;
+	}
+	if (playerCounter >= 1) {
+		players[playerTurn - 1].playerExplorers.push_back(newExplorer);
+	}
+	
 }
 void CreateDestroyer(int playerTurn) {
 	std::string destroyerName;
 	std::cout << "Please name the destroyer:";
 	std::cin >> destroyerName;
 	Destroyer newDestroyer(destroyerName);
-	players[playerTurn - 1].playerDestroyers.push_back(newDestroyer);
+	int playerCounter = 0;
+	for (int i = 0; i < players.size(); i++) {
+		playerCounter++;
+	}
+	if (playerCounter >= 1) {
+		players[playerTurn - 1].playerDestroyers.push_back(newDestroyer);
+	}
+	
 }
 void CreateMiner(int playerTurn) {
 	std::string minerName;
 	std::cout << "Please name the miner:";
 	std::cin >> minerName;
 	Miner newMiner(minerName);
-	players[playerTurn - 1].playerMiners.push_back(newMiner);
+	int playerCounter = 0;
+	for (int i = 0; i < players.size(); i++) {
+		playerCounter++;
+	}
+	if (playerCounter >= 1) {
+		players[playerTurn - 1].playerMiners.push_back(newMiner);
+	}
+	
 }
