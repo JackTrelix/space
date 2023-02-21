@@ -80,8 +80,8 @@ void PlayerTurn(int playerSel) {
 					if (viewStarSel == allStarsNames[i]) {
 						if (allStars[i].controllingFaction != playerSel) {
 							std::cout << "Please select an explorer ship under your control:";
-							for (int h = 1; h < players[playerSel].playerExplorers.size(); h++) {
-								std::cout << players[playerSel].playerExplorers[h].shipName << "\n";
+							for (int h = 0; h < players[playerSel - 1].playerExplorers.size(); h++) {
+								std::cout << players[playerSel - 1].playerExplorers[h].shipName << "\n";
 							}
 						}
 					}
@@ -216,7 +216,7 @@ void CreateExplorer(int playerTurn) {
 	if (playerCounter >= 1) {
 		players[playerTurn - 1].playerExplorers.push_back(newExplorer);
 	}
-	
+
 }
 void CreateDestroyer(int playerTurn) {
 	std::string destroyerName;
@@ -230,7 +230,7 @@ void CreateDestroyer(int playerTurn) {
 	if (playerCounter >= 1) {
 		players[playerTurn - 1].playerDestroyers.push_back(newDestroyer);
 	}
-	
+
 }
 void CreateMiner(int playerTurn) {
 	std::string minerName;
@@ -244,5 +244,5 @@ void CreateMiner(int playerTurn) {
 	if (playerCounter >= 1) {
 		players[playerTurn - 1].playerMiners.push_back(newMiner);
 	}
-	
+
 }
