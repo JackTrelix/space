@@ -14,6 +14,7 @@ int main() {
 	Galaxy MyGalaxy;
 	DrawBoard();
 
+	/*
 	std::cout << "Player 1, please name your empire: ";
 	std::cin >> player1Name;
 	std::cout << "Please label your empire with a single character: ";
@@ -22,9 +23,10 @@ int main() {
 	std::cin >> player2Name;
 	std::cout << "Please label your empire with a single character: ";
 	std::cin >> player2Label;
-	Player player1(playerName, playerLabel);
+	*/
+	Player player1;
 	Player player2;
-	
+
 	DeclareFactionCapitols();
 	DrawBoard();
 	GameLoop();
