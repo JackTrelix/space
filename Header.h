@@ -30,6 +30,8 @@ class Destroyer;
 class Miner;
 class Player;
 
+
+
 //classes
 class Star {
 private:
@@ -85,7 +87,7 @@ public:
 	std::string shipName;
 	Explorer(std::string newExplorerName) {
 		shipName = newExplorerName;
-		
+
 
 		shipSpeed = 6;
 	}
@@ -121,12 +123,13 @@ public:
 	Player(std::string newFactionName = WordGenerator(), char newFactionLabel = alphabet[std::rand() % alphabet.size()]) {
 		factionName = newFactionName;
 		factionLabel = toupper(newFactionLabel);
-/*
-		Explorer newExplorer1();
-		playerExplorers.push_back(newExplorer1);
-		Destroyer newDestroyer1();
-		playerDestroyers.push_back(newDestroyer1);
-		*/
 		
+		Explorer newExplorer("Xar");
+		playerExplorers.push_back(newExplorer);
+		Destroyer newDestroyer("Var");
+		playerDestroyers.push_back(newDestroyer);
+
+				
+
 	}
 };
